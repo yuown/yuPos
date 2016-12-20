@@ -1,0 +1,22 @@
+{
+  "yupos": {
+    "jhipsterVersion": "0.0.0",
+    "baseName": "yuPos",
+    "packageName": "yuown.pos",
+    "packageFolder": "yuown/pos",
+    "serverPort": "8080",
+    "authenticationType": "session",
+    "hibernateCache": "ehcache",
+    "clusteredHttpSession": false,
+    "websocket": false,
+    "databaseType": "sql",
+    "devDatabaseType": "h2Disk",
+    "prodDatabaseType": "mysql",
+    "searchEngine": false,
+    "messageBroker": false,
+    "buildTool": "maven",
+    "enableSocialSignIn": false,
+    "rememberMeKey": "a566439bc55ade0b1026cba7710a18f597bcf70e",
+    "enableTranslation": false
+  }
+}
