@@ -1,0 +1,21 @@
+SELECT 
+   l1.name as "List Name", e1.title, e2.title
+FROM
+    list l1,
+    levels s1,levels s2,
+    elements e1,elements e2,
+    list_elements m1,list_elements m2
+WHERE
+    l1.name = 'Categories'
+    AND s1.id = l1.id
+    
+    AND s1.id = m1.level
+    AND e1.id = m1.element
+    
+    AND s2.id = m2.level
+    AND e2.id = m2.element
+    
+    and e1.id != e2.id
+    and s1.id != s2.id
+    
+ORDER BY e1.rank, e2.rank;
