@@ -1,0 +1,36 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "elements",
+            "otherEntityName": "levelElement",
+            "otherEntityRelationshipName": "element"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "parents",
+            "otherEntityName": "levelElement",
+            "otherEntityRelationshipName": "parentElement"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "description",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "enabled",
+            "fieldType": "Boolean"
+        }
+    ],
+    "changelogDate": "20161223090206",
+    "entityTableName": "element",
+    "dto": "mapstruct",
+    "pagination": "infinite-scroll",
+    "service": "serviceImpl"
+}
