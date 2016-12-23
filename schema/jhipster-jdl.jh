@@ -1,0 +1,58 @@
+
+entity MultiList {
+	id Integer,
+    name String,
+    description String,
+    enabled Boolean
+}
+
+entity Level {
+	id Integer,
+    name String,
+    description String,
+    enabled Boolean
+}
+
+entity Element {
+	id Integer,
+    name String,
+    description String,
+    enabled Boolean
+}
+
+entity ListLevel {
+	// listId Integer,
+    // levelId Integer,
+    rank Integer,
+    active Boolean
+}
+
+entity LevelElement {
+	// levelId Integer,
+    // elementId Integer,
+    rank Integer,
+    active Boolean,
+    // parentElementId Integer
+}
+
+relationship ManyToOne {
+	ListLevel{list} to MultiList{lists(id)},
+    ListLevel{level} to Level{levelLists(id)}
+}
+
+relationship ManyToOne {
+    LevelElement{level} to Level{elementLevels(id)},
+    LevelElement{element} to Element{elements(id)},
+    LevelElement{parentElement} to Element{parents(id)}
+}
+
+// Set pagination options
+paginate MultiList, Level, Element with infinite-scroll
+paginate ListLevel, LevelElement with pagination
+
+dto * with mapstruct
+
+// Set service options to all except few
+service all with serviceImpl
+
+skipClient for *
