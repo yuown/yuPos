@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.6.24, for osx10.8 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.12, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: test
+-- Host: localhost    Database: test
 -- ------------------------------------------------------
--- Server version	5.7.17
+-- Server version	5.6.20
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -28,7 +28,7 @@ CREATE TABLE `element` (
   `description` varchar(255) DEFAULT NULL,
   `enabled` tinyint(1) DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -37,7 +37,7 @@ CREATE TABLE `element` (
 
 LOCK TABLES `element` WRITE;
 /*!40000 ALTER TABLE `element` DISABLE KEYS */;
-INSERT INTO `element` VALUES (1,'Receiving','Receiving',1),(2,'Quarantine','Quarantine',1),(3,'Reserve','Reserve',1),(4,'Picking','Picking',1),(5,'Work In Process','Work In Process',1),(6,'Finished Goods','Finished Goods',1);
+INSERT INTO `element` VALUES (0,NULL,NULL,1),(1,'Receiving','Receiving',1),(2,'Quarantine','Quarantine',0),(3,'Reserve','Reserve',1),(4,'Picking','Picking',0),(5,'Work In Process','Work In Process',1),(6,'Finished Goods','Finished Goods',0);
 /*!40000 ALTER TABLE `element` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -75,15 +75,17 @@ DROP TABLE IF EXISTS `level_element`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `level_element` (
-  `level_id` int(11) NOT NULL,
-  `element_id` int(11) NOT NULL,
+  `level_id` int(11) NOT NULL DEFAULT '0',
+  `element_id` int(11) NOT NULL DEFAULT '0',
   `rank` int(11) DEFAULT NULL,
-  `active` tinyint(1) DEFAULT '1',
-  PRIMARY KEY (`level_id`,`element_id`),
-  KEY `level_id_fk_idx` (`level_id`),
-  KEY `element_id_fk_idx` (`element_id`),
-  CONSTRAINT `element_id_fk_1` FOREIGN KEY (`element_id`) REFERENCES `element` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `level_id_fk_1` FOREIGN KEY (`level_id`) REFERENCES `level` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  `active` tinyint(1) DEFAULT '0',
+  `parent_element_id` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`level_id`,`element_id`,`parent_element_id`),
+  KEY `element_fk_11_idx` (`element_id`),
+  KEY `parent_element_fk_11_idx` (`parent_element_id`),
+  CONSTRAINT `element_fk_11` FOREIGN KEY (`element_id`) REFERENCES `element` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `level_fk_11` FOREIGN KEY (`level_id`) REFERENCES `level` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `parent_element_fk_11` FOREIGN KEY (`parent_element_id`) REFERENCES `element` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -93,7 +95,7 @@ CREATE TABLE `level_element` (
 
 LOCK TABLES `level_element` WRITE;
 /*!40000 ALTER TABLE `level_element` DISABLE KEYS */;
-INSERT INTO `level_element` VALUES (1,1,1,1),(1,2,1,1),(1,3,1,1),(1,4,1,1),(1,5,1,1),(1,6,1,1);
+INSERT INTO `level_element` VALUES (1,1,1,0,0),(1,2,2,0,0),(1,3,3,0,0),(1,4,4,0,0),(1,5,5,0,0),(1,6,6,0,0);
 /*!40000 ALTER TABLE `level_element` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -160,4 +162,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-12-23  8:40:54
+-- Dump completed on 2016-12-23 15:43:25
