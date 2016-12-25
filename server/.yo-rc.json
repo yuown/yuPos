@@ -1,6 +1,6 @@
 {
-  "yupos": {
-    "jhipsterVersion": "0.0.0",
+  "generator-jhipster": {
+    "jhipsterVersion": "3.12.2",
     "baseName": "yuPos",
     "packageName": "yuown.pos",
     "packageFolder": "yuown/pos",
@@ -16,7 +16,14 @@
     "messageBroker": false,
     "buildTool": "maven",
     "enableSocialSignIn": false,
-    "rememberMeKey": "a566439bc55ade0b1026cba7710a18f597bcf70e",
-    "enableTranslation": false
+    "rememberMeKey": "2cdf9b287fc7fed20e247a112aea1dc5e7c6f2ac",
+    "useSass": false,
+    "applicationType": "monolith",
+    "testFrameworks": [
+      "gatling"
+    ],
+    "jhiPrefix": "jhi",
+    "enableTranslation": false,
+    "serviceDiscoveryType": false
   }
 }

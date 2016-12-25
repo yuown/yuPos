@@ -15,23 +15,21 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.env.Environment;
 
 import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.Collection;
 
 @ComponentScan
-@EnableAutoConfiguration(exclude = {MetricFilterAutoConfiguration.class, MetricRepositoryAutoConfiguration.class})
-@EnableConfigurationProperties({JHipsterProperties.class, LiquibaseProperties.class})
+@EnableAutoConfiguration(exclude = { MetricFilterAutoConfiguration.class, MetricRepositoryAutoConfiguration.class })
+@EnableConfigurationProperties({ JHipsterProperties.class, LiquibaseProperties.class })
 public class YuPosApp {
 
     private static final Logger log = LoggerFactory.getLogger(YuPosApp.class);
 
-    private final Environment env;
-
-    public YuPosApp(Environment env) {
-        this.env = env;
-    }
+    @Inject
+    private Environment env;
 
     /**
      * Initializes yuPos.
@@ -67,12 +65,11 @@ public class YuPosApp {
         log.info("\n----------------------------------------------------------\n\t" +
                 "Application '{}' is running! Access URLs:\n\t" +
                 "Local: \t\thttp://localhost:{}\n\t" +
-                "External: \thttp://{}:{}\n\t" +
-                "Profile(s): \t{}\n----------------------------------------------------------",
+                "External: \thttp://{}:{}\n----------------------------------------------------------",
             env.getProperty("spring.application.name"),
             env.getProperty("server.port"),
             InetAddress.getLocalHost().getHostAddress(),
-            env.getProperty("server.port"),
-            Arrays.toString(env.getActiveProfiles()));
+            env.getProperty("server.port"));
+
     }
 }

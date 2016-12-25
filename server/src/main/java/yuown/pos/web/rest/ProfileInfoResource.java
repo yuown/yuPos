@@ -5,6 +5,7 @@ import yuown.pos.config.JHipsterProperties;
 import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.*;
 
+import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -16,14 +17,11 @@ import java.util.List;
 @RequestMapping("/api")
 public class ProfileInfoResource {
 
-    private final Environment env;
+    @Inject
+    private Environment env;
 
-    private final JHipsterProperties jHipsterProperties;
-
-    public ProfileInfoResource(Environment env, JHipsterProperties jHipsterProperties) {
-        this.env = env;
-        this.jHipsterProperties = jHipsterProperties;
-    }
+    @Inject
+    private JHipsterProperties jHipsterProperties;
 
     @GetMapping("/profile-info")
     public ProfileInfoResponse getActiveProfiles() {

@@ -10,11 +10,11 @@ import yuown.pos.service.util.RandomUtil;
 import java.time.LocalDate;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.inject.Inject;
 import java.util.Optional;
 import java.util.List;
 
@@ -30,13 +30,13 @@ import static org.assertj.core.api.Assertions.*;
 @Transactional
 public class UserServiceIntTest {
 
-    @Autowired
+    @Inject
     private PersistentTokenRepository persistentTokenRepository;
 
-    @Autowired
+    @Inject
     private UserRepository userRepository;
 
-    @Autowired
+    @Inject
     private UserService userService;
 
     @Test

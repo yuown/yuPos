@@ -1,42 +1,56 @@
 
 entity MultiList {
-	id Integer,
+    id Integer,
     name String,
     description String,
     enabled Boolean
 }
 
 entity Level {
-	id Integer,
+    id Integer,
     name String,
     description String,
     enabled Boolean
 }
 
 entity Element {
-	id Integer,
+    id Integer,
     name String,
     description String,
     enabled Boolean
 }
 
 entity ListLevel {
-	// listId Integer,
+    // listId Integer,
     // levelId Integer,
     rank Integer,
     active Boolean
 }
 
 entity LevelElement {
-	// levelId Integer,
+    // levelId Integer,
     // elementId Integer,
     rank Integer,
     active Boolean,
     // parentElementId Integer
 }
 
+entity Configuration {
+    id Integer,
+    name String,
+    value String,
+    cached Boolean,
+    type DataType
+}
+
+entity Sku {
+    id Integer,
+    name String,
+    description String
+}
+
 relationship ManyToOne {
-	ListLevel{list} to MultiList{lists(id)},
+    ListLevel{list} to MultiList{lists(id)},
     ListLevel{level} to Level{levelLists(id)}
 }
 
@@ -46,9 +60,17 @@ relationship ManyToOne {
     LevelElement{parentElement} to Element{parents(id)}
 }
 
+relationship OneToOne {
+    Sku{type(id)} to Element
+}
+
+enum DataType {
+    STRING, DOUBLE, LONG
+}
+
 // Set pagination options
 paginate MultiList, Level, Element with infinite-scroll
-paginate ListLevel, LevelElement with pagination
+paginate ListLevel, LevelElement, Configuration, Sku with pagination
 
 dto * with mapstruct
 

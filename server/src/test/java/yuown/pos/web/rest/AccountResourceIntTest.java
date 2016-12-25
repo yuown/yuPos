@@ -4,7 +4,6 @@ import yuown.pos.YuPosApp;
 import yuown.pos.domain.Authority;
 import yuown.pos.domain.User;
 import yuown.pos.repository.AuthorityRepository;
-import yuown.pos.repository.PersistentTokenRepository;
 import yuown.pos.repository.UserRepository;
 import yuown.pos.security.AuthoritiesConstants;
 import yuown.pos.service.MailService;
@@ -16,14 +15,15 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.inject.Inject;
 import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -43,17 +43,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = YuPosApp.class)
 public class AccountResourceIntTest {
 
-    @Autowired
+    @Inject
     private UserRepository userRepository;
 
-    @Autowired
+    @Inject
     private AuthorityRepository authorityRepository;
 
-    @Autowired
+    @Inject
     private UserService userService;
-
-    @Autowired
-    private PersistentTokenRepository persistentTokenRepository;
 
     @Mock
     private UserService mockUserService;
@@ -70,11 +67,15 @@ public class AccountResourceIntTest {
         MockitoAnnotations.initMocks(this);
         doNothing().when(mockMailService).sendActivationEmail((User) anyObject());
 
-        AccountResource accountResource =
-            new AccountResource(userRepository, userService, mockMailService, persistentTokenRepository);
+        AccountResource accountResource = new AccountResource();
+        ReflectionTestUtils.setField(accountResource, "userRepository", userRepository);
+        ReflectionTestUtils.setField(accountResource, "userService", userService);
+        ReflectionTestUtils.setField(accountResource, "mailService", mockMailService);
 
-        AccountResource accountUserMockResource =
-            new AccountResource(userRepository, mockUserService, mockMailService, persistentTokenRepository);
+        AccountResource accountUserMockResource = new AccountResource();
+        ReflectionTestUtils.setField(accountUserMockResource, "userRepository", userRepository);
+        ReflectionTestUtils.setField(accountUserMockResource, "userService", mockUserService);
+        ReflectionTestUtils.setField(accountUserMockResource, "mailService", mockMailService);
 
         this.restMvc = MockMvcBuilders.standaloneSetup(accountResource).build();
         this.restUserMockMvc = MockMvcBuilders.standaloneSetup(accountUserMockResource).build();

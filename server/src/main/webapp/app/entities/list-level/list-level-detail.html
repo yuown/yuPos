@@ -1,0 +1,35 @@
+
+<div>
+    <h2><span>List Level</span> {{vm.listLevel.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span>Rank</span></dt>
+        <dd>
+            <span>{{vm.listLevel.rank}}</span>
+        </dd>
+        <dt><span>Active</span></dt>
+        <dd>
+            <span>{{vm.listLevel.active}}</span>
+        </dd>
+        <dt><span>List</span></dt>
+        <dd>
+            <a ui-sref="multi-list-detail({id:vm.listLevel.listId})">{{vm.id2name(vm.multilists, vm.listLevel.listId)}}</a>
+        </dd>
+        <dt><span>Level</span></dt>
+        <dd>
+            <a ui-sref="level-detail({id:vm.listLevel.levelId})">{{vm.id2name(vm.levels, vm.listLevel.levelId)}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button" ui-sref="list-level-detail.edit({id:vm.listLevel.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-xs hidden-sm"> Edit</span>
+    </button>
+</div>

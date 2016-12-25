@@ -12,6 +12,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
+import javax.annotation.PostConstruct;
+import javax.inject.Inject;
+
 @Configuration
 public class LoggingConfiguration {
 
@@ -25,10 +28,12 @@ public class LoggingConfiguration {
     @Value("${server.port}")
     private String serverPort;
 
-    private final JHipsterProperties jHipsterProperties;
 
-    public LoggingConfiguration(JHipsterProperties jHipsterProperties) {
-        this.jHipsterProperties = jHipsterProperties;
+    @Inject
+    private JHipsterProperties jHipsterProperties;
+
+    @PostConstruct
+    private void init() {
         if (jHipsterProperties.getLogging().getLogstash().isEnabled()) {
             addLogstashAppender(context);
 

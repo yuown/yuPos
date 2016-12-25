@@ -1,0 +1,28 @@
+{
+    "fluentMethods": true,
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "value",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "cached",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "type",
+            "fieldType": "DataType",
+            "fieldValues": "STRING,DOUBLE,LONG"
+        }
+    ],
+    "changelogDate": "20161224153719",
+    "entityTableName": "configuration",
+    "dto": "mapstruct",
+    "pagination": "pagination",
+    "service": "serviceImpl"
+}

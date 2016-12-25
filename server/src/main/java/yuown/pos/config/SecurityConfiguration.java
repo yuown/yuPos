@@ -20,58 +20,48 @@ import org.springframework.security.data.repository.query.SecurityEvaluationCont
 import org.springframework.security.web.authentication.RememberMeServices;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
-import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    private final AuthenticationManagerBuilder authenticationManagerBuilder;
+    @Inject
+    private JHipsterProperties jHipsterProperties;
 
-    private final UserDetailsService userDetailsService;
+    @Inject
+    private AjaxAuthenticationSuccessHandler ajaxAuthenticationSuccessHandler;
 
-    private final JHipsterProperties jHipsterProperties;
+    @Inject
+    private AjaxAuthenticationFailureHandler ajaxAuthenticationFailureHandler;
 
-    private final AjaxAuthenticationSuccessHandler ajaxAuthenticationSuccessHandler;
+    @Inject
+    private AjaxLogoutSuccessHandler ajaxLogoutSuccessHandler;
 
-    private final AjaxAuthenticationFailureHandler ajaxAuthenticationFailureHandler;
+    @Inject
+    private Http401UnauthorizedEntryPoint authenticationEntryPoint;
 
-    private final AjaxLogoutSuccessHandler ajaxLogoutSuccessHandler;
+    @Inject
+    private UserDetailsService userDetailsService;
 
-    private final RememberMeServices rememberMeServices;
+    @Inject
+    private RememberMeServices rememberMeServices;
 
-    private final Http401UnauthorizedEntryPoint authenticationEntryPoint;
-
-    public SecurityConfiguration(AuthenticationManagerBuilder authenticationManagerBuilder, UserDetailsService userDetailsService,
-            JHipsterProperties jHipsterProperties, AjaxAuthenticationSuccessHandler ajaxAuthenticationSuccessHandler,
-            AjaxAuthenticationFailureHandler ajaxAuthenticationFailureHandler, AjaxLogoutSuccessHandler ajaxLogoutSuccessHandler,
-            RememberMeServices rememberMeServices, Http401UnauthorizedEntryPoint authenticationEntryPoint) {
-
-        this.authenticationManagerBuilder = authenticationManagerBuilder;
-        this.userDetailsService = userDetailsService;
-        this.jHipsterProperties = jHipsterProperties;
-        this.ajaxAuthenticationSuccessHandler = ajaxAuthenticationSuccessHandler;
-        this.ajaxAuthenticationFailureHandler = ajaxAuthenticationFailureHandler;
-        this.ajaxLogoutSuccessHandler = ajaxLogoutSuccessHandler;
-        this.rememberMeServices = rememberMeServices;
-        this.authenticationEntryPoint = authenticationEntryPoint;
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
-    @PostConstruct
-    public void init() {
+    @Inject
+    public void configureGlobal(AuthenticationManagerBuilder auth) {
         try {
-            authenticationManagerBuilder
+            auth
                 .userDetailsService(userDetailsService)
                     .passwordEncoder(passwordEncoder());
         } catch (Exception e) {
             throw new BeanInitializationException("Security configuration failed", e);
         }
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
     }
 
     @Override

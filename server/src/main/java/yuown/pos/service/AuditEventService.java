@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.inject.Inject;
 import java.util.Optional;
 
 /**
@@ -21,10 +22,11 @@ import java.util.Optional;
 @Transactional
 public class AuditEventService {
 
-    private final PersistenceAuditEventRepository persistenceAuditEventRepository;
+    private PersistenceAuditEventRepository persistenceAuditEventRepository;
 
-    private final AuditEventConverter auditEventConverter;
+    private AuditEventConverter auditEventConverter;
 
+    @Inject
     public AuditEventService(
         PersistenceAuditEventRepository persistenceAuditEventRepository,
         AuditEventConverter auditEventConverter) {

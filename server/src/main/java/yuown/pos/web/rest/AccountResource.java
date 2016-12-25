@@ -23,6 +23,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.UnsupportedEncodingException;
@@ -38,23 +39,17 @@ public class AccountResource {
 
     private final Logger log = LoggerFactory.getLogger(AccountResource.class);
 
-    private final UserRepository userRepository;
+    @Inject
+    private UserRepository userRepository;
 
-    private final UserService userService;
+    @Inject
+    private UserService userService;
 
-    private final MailService mailService;
+    @Inject
+    private PersistentTokenRepository persistentTokenRepository;
 
-
-    private final PersistentTokenRepository persistentTokenRepository;
-
-    public AccountResource(UserRepository userRepository, UserService userService,
-            MailService mailService, PersistentTokenRepository persistentTokenRepository) {
-
-        this.userRepository = userRepository;
-        this.userService = userService;
-        this.mailService = mailService;
-        this.persistentTokenRepository = persistentTokenRepository;
-    }
+    @Inject
+    private MailService mailService;
 
     /**
      * POST  /register : register the user.

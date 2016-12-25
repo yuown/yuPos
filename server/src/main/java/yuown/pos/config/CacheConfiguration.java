@@ -10,6 +10,7 @@ import org.springframework.context.annotation.*;
 
 import javax.annotation.PreDestroy;
 import javax.cache.CacheManager;
+import javax.inject.Inject;
 
 @Configuration
 @EnableCaching
@@ -19,15 +20,13 @@ public class CacheConfiguration {
 
     private final Logger log = LoggerFactory.getLogger(CacheConfiguration.class);
 
+    @Inject
     private CacheManager cacheManager;
-
-    public CacheConfiguration(CacheManager cacheManager) {
-        this.cacheManager = cacheManager;
-    }
 
     @PreDestroy
     public void destroy() {
         log.info("Closing Cache Manager");
         cacheManager.close();
     }
+
 }

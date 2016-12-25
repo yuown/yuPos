@@ -1,0 +1,74 @@
+<div>
+    <h2>Level Elements</h2>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-4 no-padding-left">
+                <button class="btn btn-primary" ui-sref="level-element.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span >
+                        Create new Level Element
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
+                    <th jh-sort-by="id"><span>ID</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="rank"><span>Rank</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="active"><span>Active</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="levelId"><span>Level</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="elementId"><span>Element</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="parentElementId"><span>Parent Element</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="levelElement in vm.levelElements track by levelElement.id">
+                    <td><a ui-sref="level-element-detail({id:levelElement.id})">{{levelElement.id}}</a></td>
+                    <td>{{levelElement.rank}}</td>
+                    <td>{{levelElement.active}}</td>
+                    <td>
+                        <a ui-sref="level-detail({id:levelElement.levelId})">{{vm.id2name(vm.levels, levelElement.levelId)}}</a>
+                    </td>
+                    <td>
+                        <a ui-sref="element-detail({id:levelElement.elementId})">{{vm.id2name(vm.elements, levelElement.elementId)}}</a>
+                    </td>
+                    <td>
+                        <a ui-sref="element-detail({id:levelElement.parentElementId})">{{vm.id2name(vm.elements, levelElement.parentElementId)}}</a>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="level-element-detail({id:levelElement.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-xs hidden-sm"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="level-element.edit({id:levelElement.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-xs hidden-sm"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="level-element.delete({id:levelElement.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-xs hidden-sm"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="text-center">
+        <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"></jhi-item-count>
+        <uib-pagination class="pagination-sm" total-items="vm.totalItems" items-per-page="vm.itemsPerPage" ng-model="vm.page" ng-change="vm.transition()"></uib-pagination>
+    </div>
+</div>

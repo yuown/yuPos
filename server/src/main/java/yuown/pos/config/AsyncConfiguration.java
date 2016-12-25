@@ -13,6 +13,8 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import java.util.concurrent.Executor;
 
+import javax.inject.Inject;
+
 @Configuration
 @EnableAsync
 @EnableScheduling
@@ -20,11 +22,8 @@ public class AsyncConfiguration implements AsyncConfigurer {
 
     private final Logger log = LoggerFactory.getLogger(AsyncConfiguration.class);
 
-    private final JHipsterProperties jHipsterProperties;
-
-    public AsyncConfiguration(JHipsterProperties jHipsterProperties) {
-        this.jHipsterProperties = jHipsterProperties;
-    }
+    @Inject
+    private JHipsterProperties jHipsterProperties;
 
     @Override
     @Bean(name = "taskExecutor")

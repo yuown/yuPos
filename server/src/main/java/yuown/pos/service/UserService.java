@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
+import javax.inject.Inject;
 import java.util.*;
 
 /**
@@ -29,20 +30,17 @@ public class UserService {
 
     private final Logger log = LoggerFactory.getLogger(UserService.class);
 
-    private final UserRepository userRepository;
+    @Inject
+    private PasswordEncoder passwordEncoder;
 
-    private final PasswordEncoder passwordEncoder;
+    @Inject
+    private UserRepository userRepository;
 
-    private final PersistentTokenRepository persistentTokenRepository;
+    @Inject
+    private PersistentTokenRepository persistentTokenRepository;
 
-    private final AuthorityRepository authorityRepository;
-
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, PersistentTokenRepository persistentTokenRepository, AuthorityRepository authorityRepository) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.persistentTokenRepository = persistentTokenRepository;
-        this.authorityRepository = authorityRepository;
-    }
+    @Inject
+    private AuthorityRepository authorityRepository;
 
     public Optional<User> activateRegistration(String key) {
         log.debug("Activating user for activation key {}", key);

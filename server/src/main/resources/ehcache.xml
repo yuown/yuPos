@@ -20,5 +20,31 @@
 
     <cache alias="yuown.pos.domain.User.persistentTokens" uses-template="simple"/>
 
+    <cache alias="yuown.pos.domain.MultiList" uses-template="simple"/>
+
+    <cache alias="yuown.pos.domain.MultiList.lists" uses-template="simple"/>
+
+    <cache alias="yuown.pos.domain.Level" uses-template="simple"/>
+
+    <cache alias="yuown.pos.domain.Level.levelLists" uses-template="simple"/>
+
+    <cache alias="yuown.pos.domain.Level.elementLevels" uses-template="simple"/>
+
+    <cache alias="yuown.pos.domain.Element" uses-template="simple"/>
+
+    <cache alias="yuown.pos.domain.Element.elements" uses-template="simple"/>
+
+    <cache alias="yuown.pos.domain.Element.parents" uses-template="simple"/>
+
+    <cache alias="yuown.pos.domain.ListLevel" uses-template="simple"/>
+
+    <cache alias="yuown.pos.domain.LevelElement" uses-template="simple"/>
+
+    <cache alias="yuown.pos.domain.Configuration" uses-template="simple"/>
+
+    <cache alias="yuown.pos.domain.Element.skuses" uses-template="simple"/>
+
+    <cache alias="yuown.pos.domain.Sku" uses-template="simple"/>
+
     <!-- jhipster-needle-ehcache-add-entry -->
 </config>

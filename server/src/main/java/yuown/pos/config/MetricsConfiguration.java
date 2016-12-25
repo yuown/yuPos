@@ -23,6 +23,7 @@ import org.springframework.boot.web.servlet.ServletContextInitializer;
 import org.springframework.context.annotation.*;
 
 import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import java.lang.management.ManagementFactory;
@@ -46,18 +47,11 @@ public class MetricsConfiguration extends MetricsConfigurerAdapter {
 
     private HealthCheckRegistry healthCheckRegistry = new HealthCheckRegistry();
 
-    private final JHipsterProperties jHipsterProperties;
-
-    private HikariDataSource hikariDataSource;
-
-    public MetricsConfiguration(JHipsterProperties jHipsterProperties) {
-        this.jHipsterProperties = jHipsterProperties;
-    }
+    @Inject
+    private JHipsterProperties jHipsterProperties;
 
     @Autowired(required = false)
-    public void setHikariDataSource(HikariDataSource hikariDataSource) {
-        this.hikariDataSource = hikariDataSource;
-    }
+    private HikariDataSource hikariDataSource;
 
     @Override
     @Bean
@@ -108,15 +102,15 @@ public class MetricsConfiguration extends MetricsConfigurerAdapter {
 
         private final Logger log = LoggerFactory.getLogger(GraphiteRegistry.class);
 
-        private final MetricRegistry metricRegistry;
+        @Inject
+        private MetricRegistry metricRegistry;
 
-        private final JHipsterProperties jHipsterProperties;
+        @Inject
+        private JHipsterProperties jHipsterProperties;
 
-        public GraphiteRegistry(MetricRegistry metricRegistry, JHipsterProperties jHipsterProperties) {
-            this.metricRegistry = metricRegistry;
-            this.jHipsterProperties = jHipsterProperties;
-            if (this.
-            jHipsterProperties.getMetrics().getGraphite().isEnabled()) {
+        @PostConstruct
+        private void init() {
+            if (jHipsterProperties.getMetrics().getGraphite().isEnabled()) {
                 log.info("Initializing Metrics Graphite reporting");
                 String graphiteHost = jHipsterProperties.getMetrics().getGraphite().getHost();
                 Integer graphitePort = jHipsterProperties.getMetrics().getGraphite().getPort();
@@ -138,14 +132,11 @@ public class MetricsConfiguration extends MetricsConfigurerAdapter {
 
         private final Logger log = LoggerFactory.getLogger(PrometheusRegistry.class);
 
-        private final MetricRegistry metricRegistry;
+        @Inject
+        private MetricRegistry metricRegistry;
 
-        private final JHipsterProperties jHipsterProperties;
-
-        public PrometheusRegistry(MetricRegistry metricRegistry, JHipsterProperties jHipsterProperties) {
-            this.metricRegistry = metricRegistry;
-            this.jHipsterProperties = jHipsterProperties;
-        }
+        @Inject
+        private JHipsterProperties jHipsterProperties;
 
         @Override
         public void onStartup(ServletContext servletContext) throws ServletException {

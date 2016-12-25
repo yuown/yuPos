@@ -4,19 +4,19 @@ import yuown.pos.YuPosApp;
 import yuown.pos.domain.User;
 import yuown.pos.repository.UserRepository;
 import yuown.pos.service.UserService;
-import yuown.pos.service.MailService;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -31,13 +31,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = YuPosApp.class)
 public class UserResourceIntTest {
 
-    @Autowired
+    @Inject
     private UserRepository userRepository;
 
-    @Autowired
-    private MailService mailService;
-
-    @Autowired
+    @Inject
     private UserService userService;
 
     private MockMvc restUserMockMvc;
@@ -64,7 +61,9 @@ public class UserResourceIntTest {
 
     @Before
     public void setup() {
-        UserResource userResource = new UserResource(userRepository, mailService, userService);
+        UserResource userResource = new UserResource();
+        ReflectionTestUtils.setField(userResource, "userRepository", userRepository);
+        ReflectionTestUtils.setField(userResource, "userService", userService);
         this.restUserMockMvc = MockMvcBuilders.standaloneSetup(userResource).build();
     }
 

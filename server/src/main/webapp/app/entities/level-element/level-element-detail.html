@@ -1,0 +1,39 @@
+
+<div>
+    <h2><span>Level Element</span> {{vm.levelElement.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span>Rank</span></dt>
+        <dd>
+            <span>{{vm.levelElement.rank}}</span>
+        </dd>
+        <dt><span>Active</span></dt>
+        <dd>
+            <span>{{vm.levelElement.active}}</span>
+        </dd>
+        <dt><span>Level</span></dt>
+        <dd>
+            <a ui-sref="level-detail({id:vm.levelElement.levelId})">{{vm.id2name(vm.levels, vm.levelElement.levelId)}}</a>
+        </dd>
+        <dt><span>Element</span></dt>
+        <dd>
+            <a ui-sref="element-detail({id:vm.levelElement.elementId})">{{vm.id2name(vm.elements, vm.levelElement.elementId)}}</a>
+        </dd>
+        <dt><span>Parent Element</span></dt>
+        <dd>
+            <a ui-sref="element-detail({id:vm.levelElement.parentElementId})">{{vm.id2name(vm.elements, vm.levelElement.parentElementId)}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button" ui-sref="level-element-detail.edit({id:vm.levelElement.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-xs hidden-sm"> Edit</span>
+    </button>
+</div>
